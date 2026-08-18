@@ -226,7 +226,17 @@ footer {
 button {
   touch-action: manipulation;
 }
-
+#renameBtn {
+  margin-top: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  font-size: .75rem;
+  cursor: pointer;
+}
 @media (max-width: 420px) {
   .world { height: 350px; }
   .actions button { padding: 10px 2px; }
