@@ -223,6 +223,10 @@ footer {
   opacity: .55;
 }
 
+button {
+  touch-action: manipulation;
+}
+
 @media (max-width: 420px) {
   .world { height: 350px; }
   .actions button { padding: 10px 2px; }
