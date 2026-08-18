@@ -134,6 +134,28 @@ document.querySelectorAll("[data-action]").forEach(button => {
   button.addEventListener("click", () => act(button.dataset.action));
 });
 
+document.querySelector("#renameBtn").addEventListener("click", () => {
+  const newName = prompt("What would you like to name your TAIAO companion?", state.name);
+
+  if (newName === null) return;
+
+  const cleanedName = newName.trim();
+
+  if (!cleanedName) {
+    alert("Please enter a name.");
+    return;
+  }
+
+  if (cleanedName.length > 20) {
+    alert("Please choose a name with 20 characters or fewer.");
+    return;
+  }
+
+  state.name = cleanedName;
+  save();
+  render();
+});
+
 document.querySelector("#resetBtn").addEventListener("click", () => {
   if (!confirm("Start a new TAIAO companion?")) return;
   state = { ...defaultState, lastSeen: Date.now() };
