@@ -60,14 +60,25 @@ function render() {
   };
 
   for (const [key, value] of Object.entries(values)) {
-    document.querySelector(`#${key}Value`).textContent = value;
+    document.querySelector(`#${key}Value`).textContent = Math.round(value);
     document.querySelector(`#${key}Bar`).style.width = `${value}%`;
   }
 
   document.querySelector("#name").textContent = state.name;
   document.querySelector("#mood").textContent = mood();
 }
+setInterval(() => {
+  const now = Date.now();
+  const elapsedHours = Math.max(0, (now - state.lastSeen) / 3600000);
 
+  state.hunger = Math.max(0, state.hunger - elapsedHours * 4);
+  state.happiness = Math.max(0, state.happiness - elapsedHours * 2);
+  state.energy = Math.max(0, state.energy - elapsedHours * 1.5);
+  state.lastSeen = now;
+
+  localStorage.setItem(KEY, JSON.stringify(state));
+  render();
+}, 1000);
 const discoveries = [
   ["He wā hou", "A new moment in TAIAO. Take a breath and look around."],
   ["Te ngahere", "The forest is alive with tiny discoveries."],
