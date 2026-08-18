@@ -106,7 +106,7 @@ const message = moodMessage();
   document.querySelector("#moodReo").textContent = message.reo;
   document.querySelector("#moodEnglish").textContent = message.english;
 }
-}
+
 setInterval(() => {
   const now = Date.now();
   const elapsedHours = Math.max(0, (now - state.lastSeen) / 3600000);
