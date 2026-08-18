@@ -1,0 +1,147 @@
+const KEY = "taiao-v0.1";
+
+const defaultState = {
+  name: "Koru",
+  hunger: 70,
+  happiness: 70,
+  energy: 70,
+  lastSeen: Date.now()
+};
+
+let state = loadState();
+
+function clamp(value) {
+  return Math.max(0, Math.min(100, Math.round(value)));
+}
+
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY));
+    if (!saved) return { ...defaultState };
+
+    const elapsedHours = Math.max(0, (Date.now() - saved.lastSeen) / 3600000);
+    return {
+      ...defaultState,
+      ...saved,
+      hunger: clamp(saved.hunger - elapsedHours * 4),
+      happiness: clamp(saved.happiness - elapsedHours * 2),
+      energy: clamp(saved.energy - elapsedHours * 1.5),
+      lastSeen: Date.now()
+    };
+  } catch {
+    return { ...defaultState };
+  }
+}
+
+function save() {
+  state.lastSeen = Date.now();
+  localStorage.setItem(KEY, JSON.stringify(state));
+  document.querySelector("#saveStatus").textContent = "Saved";
+}
+
+function setSpeech(text) {
+  document.querySelector("#speech").textContent = text;
+}
+
+function mood() {
+  const average = (state.hunger + state.happiness + state.energy) / 3;
+  if (average >= 80) return "🤩";
+  if (average >= 60) return "😊";
+  if (average >= 40) return "🙂";
+  if (average >= 20) return "😟";
+  return "🥺";
+}
+
+function render() {
+  const values = {
+    hunger: state.hunger,
+    happiness: state.happiness,
+    energy: state.energy
+  };
+
+  for (const [key, value] of Object.entries(values)) {
+    document.querySelector(`#${key}Value`).textContent = value;
+    document.querySelector(`#${key}Bar`).style.width = `${value}%`;
+  }
+
+  document.querySelector("#name").textContent = state.name;
+  document.querySelector("#mood").textContent = mood();
+}
+
+const discoveries = [
+  ["He wā hou", "A new moment in TAIAO. Take a breath and look around."],
+  ["Te ngahere", "The forest is alive with tiny discoveries."],
+  ["Ngā manu", "Listen carefully — the world around you has its own voices."],
+  ["Te awa", "Your companion wants to explore somewhere new."],
+  ["Kupu hou", "Try learning one new kupu together today."]
+];
+
+function discover() {
+  const item = discoveries[Math.floor(Math.random() * discoveries.length)];
+  document.querySelector("#discoveryTitle").textContent = item[0];
+  document.querySelector("#discoveryText").textContent = item[1];
+}
+
+function animate() {
+  const creature = document.querySelector("#creature");
+  creature.classList.remove("bounce");
+  void creature.offsetWidth;
+  creature.classList.add("bounce");
+}
+
+function act(action) {
+  if (action === "feed") {
+    state.hunger = clamp(state.hunger + 22);
+    state.happiness = clamp(state.happiness + 3);
+    setSpeech("Ka pai! 🍃");
+  }
+
+  if (action === "play") {
+    if (state.energy < 12) {
+      setSpeech("Kei te ngenge ahau… 😴");
+    } else {
+      state.happiness = clamp(state.happiness + 18);
+      state.energy = clamp(state.energy - 12);
+      state.hunger = clamp(state.hunger - 5);
+      setSpeech("Tākaro! 🎉");
+    }
+  }
+
+  if (action === "rest") {
+    state.energy = clamp(state.energy + 25);
+    state.happiness = clamp(state.happiness + 2);
+    setSpeech("Okioki… 🌙");
+  }
+
+  if (action === "explore") {
+    if (state.energy < 18) {
+      setSpeech("Me okioki tātou. 🌙");
+    } else {
+      state.energy = clamp(state.energy - 15);
+      state.hunger = clamp(state.hunger - 7);
+      state.happiness = clamp(state.happiness + 12);
+      setSpeech("Tūhura! 🌿");
+      discover();
+    }
+  }
+
+  animate();
+  render();
+  save();
+}
+
+document.querySelectorAll("[data-action]").forEach(button => {
+  button.addEventListener("click", () => act(button.dataset.action));
+});
+
+document.querySelector("#resetBtn").addEventListener("click", () => {
+  if (!confirm("Start a new TAIAO companion?")) return;
+  state = { ...defaultState, lastSeen: Date.now() };
+  save();
+  setSpeech("Kia ora! 👋");
+  discover();
+  render();
+});
+
+render();
+discover();

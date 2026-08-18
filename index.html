@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAIAO v0.1</title>
+  <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+  <main class="app">
+    <header>
+      <div>
+        <p class="eyebrow">TAIAO</p>
+        <h1>He hoa iti — a little companion</h1>
+      </div>
+      <button id="resetBtn" class="ghost">Reset</button>
+    </header>
+
+    <section class="world" aria-label="TAIAO companion">
+      <div class="sun"></div>
+      <div class="mountain mountain-back"></div>
+      <div class="mountain mountain-front"></div>
+
+      <div id="creature" class="creature">
+        <div class="ear left"></div>
+        <div class="ear right"></div>
+        <div class="body">
+          <div class="eye left"></div>
+          <div class="eye right"></div>
+          <div class="mouth"></div>
+          <div class="belly"></div>
+        </div>
+      </div>
+
+      <div id="speech" class="speech">Kia ora! 👋</div>
+    </section>
+
+    <section class="status">
+      <div class="name-row">
+        <div>
+          <span class="label">Your companion</span>
+          <h2 id="name">Koru</h2>
+        </div>
+        <div class="mood" id="mood">😊</div>
+      </div>
+
+      <div class="meters">
+        <div class="meter">
+          <div><span>🍎 Hunger</span><strong id="hungerValue">70</strong></div>
+          <div class="bar"><span id="hungerBar"></span></div>
+        </div>
+        <div class="meter">
+          <div><span>❤️ Happiness</span><strong id="happinessValue">70</strong></div>
+          <div class="bar"><span id="happinessBar"></span></div>
+        </div>
+        <div class="meter">
+          <div><span>⚡ Energy</span><strong id="energyValue">70</strong></div>
+          <div class="bar"><span id="energyBar"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="actions">
+      <button data-action="feed"><span>🍃</span><small>Whāngai</small><b>Feed</b></button>
+      <button data-action="play"><span>🎮</span><small>Tākaro</small><b>Play</b></button>
+      <button data-action="rest"><span>🌙</span><small>Okioki</small><b>Rest</b></button>
+      <button data-action="explore"><span>🌿</span><small>Tūhura</small><b>Explore</b></button>
+    </section>
+
+    <section class="discovery">
+      <p class="eyebrow">Today in TAIAO</p>
+      <h3 id="discoveryTitle">A new day begins.</h3>
+      <p id="discoveryText">Your companion is waiting to see what you discover together.</p>
+    </section>
+
+    <footer>
+      <span>TAIAO v0.1</span>
+      <span id="saveStatus">Saved</span>
+    </footer>
+  </main>
+
+  <script src="src/main.js"></script>
+</body>
+</html>
