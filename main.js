@@ -51,7 +51,42 @@ function mood() {
   if (average >= 20) return "😟";
   return "🥺";
 }
+function moodMessage() {
+  const average = (state.hunger + state.happiness + state.energy) / 3;
 
+  if (average >= 80) {
+    return {
+      reo: "Kei te pai rawa atu au!",
+      english: "I'm feeling amazing!"
+    };
+  }
+
+  if (average >= 60) {
+    return {
+      reo: "Kei te pai au.",
+      english: "I'm doing well."
+    };
+  }
+
+  if (average >= 40) {
+    return {
+      reo: "Kei te pai tonu au.",
+      english: "I'm okay for now."
+    };
+  }
+
+  if (average >= 20) {
+    return {
+      reo: "Āwhinatia mai.",
+      english: "I could use some care."
+    };
+  }
+
+  return {
+    reo: "Kei te hiahia au ki a koe.",
+    english: "I need you."
+  };
+}
 function render() {
   const values = {
     hunger: state.hunger,
@@ -66,6 +101,11 @@ function render() {
 
   document.querySelector("#name").textContent = state.name;
   document.querySelector("#mood").textContent = mood();
+
+const message = moodMessage();
+  document.querySelector("#moodReo").textContent = message.reo;
+  document.querySelector("#moodEnglish").textContent = message.english;
+}
 }
 setInterval(() => {
   const now = Date.now();
