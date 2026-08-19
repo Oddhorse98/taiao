@@ -64,6 +64,12 @@ if (state.hunger < 20) {
     english: "I'm hungry."
   };
 }
+if (state.happiness < 20) {
+  return {
+    reo: "Me tākaro tāua.",
+    english: "Let's play together."
+  };
+}
   const average = (state.hunger + state.happiness + state.energy) / 3;
 
   if (average >= 80) {
