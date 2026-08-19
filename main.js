@@ -44,7 +44,12 @@ function setSpeech(text) {
 }
 
 function mood() {
+  if (state.energy < 20) return "😴";
+  if (state.hunger < 20) return "🥺";
+  if (state.happiness < 20) return "😔";
+  
   const average = (state.hunger + state.happiness + state.energy) / 3;
+  
   if (average >= 80) return "🤩";
   if (average >= 60) return "😊";
   if (average >= 40) return "🙂";
