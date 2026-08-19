@@ -58,6 +58,12 @@ function moodMessage() {
     english: "I'm really tired."
   };
 }
+if (state.hunger < 20) {
+  return {
+    reo: "Kei te hiakai ahau.",
+    english: "I'm hungry."
+  };
+}
   const average = (state.hunger + state.happiness + state.energy) / 3;
 
   if (average >= 80) {
