@@ -52,6 +52,12 @@ function mood() {
   return "🥺";
 }
 function moodMessage() {
+  if (state.energy < 20) {
+  return {
+    reo: "Kei te ngenge ahau.",
+    english: "I'm really tired."
+  };
+}
   const average = (state.hunger + state.happiness + state.energy) / 3;
 
   if (average >= 80) {
