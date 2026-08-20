@@ -258,7 +258,9 @@ document.querySelector("#resetBtn").addEventListener("click", () => {
 });
 
 setInterval(() => {
-  autonomousMoment();
+  if (Math.random() < 0.35) {
+    autonomousMoment();
+  }
 }, 15000);
 
 render();
