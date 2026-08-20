@@ -1,5 +1,18 @@
 const KEY = "taiao-v0.1";
 
+const kaitiaki = {
+  name: "Koru",
+
+  rhythm: {
+    activeTime: "day"
+  },
+
+  limits: {
+    playEnergy: 20,
+    exploreEnergy: 18
+  }
+};
+
 const defaultState = {
   name: "Koru",
   hunger: 70,
@@ -171,7 +184,7 @@ function act(action) {
   }
 
   if (action === "play") {
-    if (state.energy < 20) {
+    if (state.energy < kaitiaki.limits.playEnergy) {
       setSpeech("Kāo... me okioki au. 😴");
       return;
       } else {
