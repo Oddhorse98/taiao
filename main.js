@@ -212,7 +212,7 @@ function autonomousMoment() {
   }
 
   if (state.energy < 30) {
-    setSpeech("Kei te ngenge ahau… 😴");
+    setSpeech("Okioki? 🌙");
     return;
   }
 
