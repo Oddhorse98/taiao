@@ -171,9 +171,10 @@ function act(action) {
   }
 
   if (action === "play") {
-    if (state.energy < 12) {
-      setSpeech("Kei te ngenge ahau… 😴");
-    } else {
+    if (state.energy < 20) {
+      setSpeech("Kāo... me okioki au. 😴");
+      return;
+      } else {
       state.happiness = clamp(state.happiness + 18);
       state.energy = clamp(state.energy - 12);
       state.hunger = clamp(state.hunger - 5);
