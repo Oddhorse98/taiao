@@ -220,6 +220,21 @@ function autonomousMoment() {
     setSpeech("Me tākaro tāua. 🎮");
     return;
   }
+  if (
+  state.hunger >= 60 &&
+  state.energy >= 60 &&
+  state.happiness >= 60
+) {
+  const happyMoments = [
+    "He rā pai tēnei. ☀️",
+    "Kia pai te noho. 🌿",
+    "Titiro! 👀",
+    "Ka mau te wehi! ✨"
+  ];
+
+  const message = happyMoments[Math.floor(Math.random() * happyMoments.length)];
+  setSpeech(message);
+}
 }
 
 document.querySelectorAll("[data-action]").forEach(button => {
