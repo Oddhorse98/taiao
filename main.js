@@ -203,6 +203,24 @@ function act(action) {
   render();
   save();
 }
+function autonomousMoment() {
+  // Rangi sometimes expresses a need without being asked.
+
+  if (state.hunger < 30) {
+    setSpeech("Kei te hiakai ahau… 🍎");
+    return;
+  }
+
+  if (state.energy < 30) {
+    setSpeech("Kei te ngenge ahau… 😴");
+    return;
+  }
+
+  if (state.happiness < 30) {
+    setSpeech("Me tākaro tāua. 🎮");
+    return;
+  }
+}
 
 document.querySelectorAll("[data-action]").forEach(button => {
   button.addEventListener("click", () => act(button.dataset.action));
@@ -238,6 +256,10 @@ document.querySelector("#resetBtn").addEventListener("click", () => {
   discover();
   render();
 });
+
+setInterval(() => {
+  autonomousMoment();
+}, 15000);
 
 render();
 discover();
