@@ -264,27 +264,39 @@ if (action === "explore") {
     // Stop the Explore action here too.
     return;
   }
+// If the code reaches this point:
+// ✓ Koru is within their natural active period.
+// ✓ Koru has enough energy.
+//
+// That means Explore is allowed to happen.
 
-  // If the code reaches this point:
-  // ✓ Koru is within their natural active period.
-  // ✓ Koru has enough energy.
-  //
-  // Your EXISTING successful Explore code continues below.
-  if (action === "explore") {
-    if (state.energy < kaitiaki.limits.exploreEnergy) {
-      setSpeech("Me okioki tātou. 🌙");
-    } else {
-      state.energy = clamp(state.energy - 15);
-      state.hunger = clamp(state.hunger - 7);
-      state.happiness = clamp(state.happiness + 12);
-      setSpeech("Tūhura! 🌿");
-      discover();
-    }
-  }
+// Exploring uses some of Koru's energy.
+state.energy = clamp(state.energy - 15);
 
-  animate();
-  render();
-  save();
+// Exploring also makes Koru a little hungrier.
+state.hunger = clamp(state.hunger - 7);
+
+// Exploring is enriching, so happiness increases.
+state.happiness = clamp(state.happiness + 12);
+
+// Let the player know the Explore action succeeded.
+setSpeech("Tūhura! 🌿");
+
+// Trigger TAIAO's discovery system.
+discover();
+
+// Close the Explore action.
+}
+// Update the character animation after the action.
+animate();
+
+// Redraw the interface with the new stats.
+render();
+
+// Save Koru's updated state in the browser.
+save();
+
+// Close the main act(action) function.
 }
 function autonomousMoment() {
   // Rangi sometimes expresses a need without being asked.
