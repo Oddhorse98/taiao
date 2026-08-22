@@ -79,6 +79,49 @@ function getCurrentNeed() {
   // Koru currently has no urgent need.
   return "none";
 }
+// ======================================================
+// CURRENT NEED DISPLAY
+// This turns the game's internal need labels
+// ("kai", "rest", "play", "none")
+// into friendly text the player can actually see.
+// ======================================================
+
+function getCurrentNeedDisplay() {
+  // Ask our existing function what Koru needs most right now.
+  const need = getCurrentNeed();
+  // If Koru's food level is getting low.
+  if (need === "kai") {
+    return "🍎 Getting hungry";
+  }
+  // If Koru's energy is getting low.
+  if (need === "rest") {
+    return "🌙 Needs rest";
+  }
+  // If Koru's happiness is getting low.
+  if (need === "play") {
+    return "🎮 Wants connection";
+  }
+  // If nothing is currently low,
+  // Koru doesn't have an urgent need.
+  return "🌿 All needs met";
+}
+// ======================================================
+// NATURAL RHYTHM DISPLAY
+// This is NOT Koru's mood or energy level.
+//
+// It tells the player whether this is naturally an
+// active or resting time for this type of kaitiaki.
+// ======================================================
+function getNaturalRhythmDisplay() {
+  // isKaitiakiActive() already compares the real-world
+  // time with the activeTime in Koru's configuration.
+  if (isKaitiakiActive()) {
+    return "☀️ Active";
+  }
+  // Koru can still be happy and energetic here.
+// This simply means it is outside their natural active period.
+  return "🌙 Resting";
+}
 function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(KEY));
@@ -194,6 +237,18 @@ const message = moodMessage();
   document.querySelector("#moodReo").textContent = message.reo;
   document.querySelector("#moodEnglish").textContent = message.english;
 }
+// ======================================================
+// COMPANION STATE UI
+// Keep wellbeing, current need and natural rhythm
+// separate so they can all tell us different things.
+// ======================================================
+// Show what Koru most needs right now.
+document.querySelector("#currentNeed").textContent =
+  getCurrentNeedDisplay();
+// Show whether this is naturally an active or resting
+// period for Koru.
+document.querySelector("#naturalRhythm").textContent =
+  getNaturalRhythmDisplay();
 
 setInterval(() => {
   const now = Date.now();
@@ -263,7 +318,6 @@ if (action === "explore") {
   // isKaitiakiActive() compares that setting with
   // the player's real-world time.
   if (!isKaitiakiActive()) {
-
     // If Koru is outside their natural active period,
     // they choose not to explore.
     //
@@ -280,45 +334,33 @@ if (action === "explore") {
   // The minimum energy required to explore comes from
   // the kaitiaki configuration instead of a hard-coded number.
   if (state.energy < kaitiaki.limits.exploreEnergy) {
-
     // Koru needs to rest before exploring.
     setSpeech("Me okioki tātou. 🌙");
-
     // Stop the Explore action here too.
     return;
   }
 // If the code reaches this point:
 // ✓ Koru is within their natural active period.
 // ✓ Koru has enough energy.
-//
 // That means Explore is allowed to happen.
-
 // Exploring uses some of Koru's energy.
 state.energy = clamp(state.energy - 15);
-
 // Exploring also makes Koru a little hungrier.
 state.hunger = clamp(state.hunger - 7);
-
 // Exploring is enriching, so happiness increases.
 state.happiness = clamp(state.happiness + 12);
-
 // Let the player know the Explore action succeeded.
 setSpeech("Tūhura! 🌿");
-
 // Trigger TAIAO's discovery system.
 discover();
-
 // Close the Explore action.
 }
 // Update the character animation after the action.
 animate();
-
 // Redraw the interface with the new stats.
 render();
-
 // Save Koru's updated state in the browser.
 save();
-
 // Close the main act(action) function.
 }
 function autonomousMoment() {
