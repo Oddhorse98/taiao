@@ -56,6 +56,29 @@ function isKaitiakiActive() {
 
   return true;
 }
+function getCurrentNeed() {
+  // Check hunger first.
+  // Remember: in our current prototype, a LOWER hunger number
+  // means Koru is getting hungrier.
+  if (state.hunger < 40) {
+    // Return a simple internal label.
+    // We are NOT changing the UI yet.
+    return "kai";
+  }
+  // If hunger is okay, check energy next.
+  if (state.energy < 40) {
+    // Koru's current need is rest.
+    return "rest";
+  }
+  // If hunger and energy are okay, check happiness.
+  if (state.happiness < 40) {
+    // Koru's current need is connection / play.
+    return "play";
+  }
+  // If none of the needs are low enough to matter,
+  // Koru currently has no urgent need.
+  return "none";
+}
 function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(KEY));
