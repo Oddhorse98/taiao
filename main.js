@@ -43,6 +43,19 @@ function getTimePeriod() {
 
   return "night";
 }
+function isKaitiakiActive() {
+  const period = getTimePeriod();
+
+  if (kaitiaki.rhythm.activeTime === "day") {
+    return period === "morning" || period === "day";
+  }
+
+  if (kaitiaki.rhythm.activeTime === "night") {
+    return period === "evening" || period === "night";
+  }
+
+  return true;
+}
 function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(KEY));
