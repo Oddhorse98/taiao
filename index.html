@@ -48,6 +48,33 @@
            <div id="moodReo"></div>
            <div id="moodEnglish"></div>
         </div>
+      <div id="moodMessage">
+  <div id="moodReo"></div>
+  <div id="moodEnglish"></div>
+</div>
+<!-- ======================================================
+     KORU'S CURRENT STATE
+     These are separate from the numerical meters below.
+     CURRENT NEED:
+     What Koru most needs from the player right now.
+     NATURAL RHYTHM:
+     Whether Koru is naturally active or resting based
+     on their kaitiaki type + the player's real-world time.
+======================================================= -->
+<div class="companion-state">
+  <!-- Koru's most important need right now -->
+  <div class="status-block">
+    <div class="status-label">CURRENT NEED</div>
+    <div id="currentNeed">🌿 All needs met</div>
+</div>
+  <!-- Koru's natural behaviour at this time of day -->
+  <div class="status-block">
+    <div class="status-label">NATURAL RHYTHM</div>
+    <div id="naturalRhythm">☀️ Active</div>
+  </div>
+</div>
+<!-- Numerical wellbeing meters -->
+<div class="meters">
       <div class="meters">
         <div class="meter">
           <div><span>🍎 Hunger</span><strong id="hungerValue">70</strong></div>
