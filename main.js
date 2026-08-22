@@ -219,38 +219,32 @@ if (state.happiness < 20) {
   };
 }
 function render() {
+  // Grab the three care stats we need to redraw.
   const values = {
     hunger: state.hunger,
     happiness: state.happiness,
     energy: state.energy
   };
 
+  // Update each number + its matching progress bar.
   for (const [key, value] of Object.entries(values)) {
     document.querySelector(`#${key}Value`).textContent = Math.round(value);
     document.querySelector(`#${key}Bar`).style.width = `${value}%`;
   }
 
+  // Update Koru's name + mood emoji.
   document.querySelector("#name").textContent = state.name;
   document.querySelector("#mood").textContent = mood();
 
-const message = moodMessage();
+  // Update the bilingual mood message.
+  const message = moodMessage();
   document.querySelector("#moodReo").textContent = message.reo;
   document.querySelector("#moodEnglish").textContent = message.english;
-}
-// ======================================================
-// COMPANION STATE UI
-// Keep wellbeing, current need and natural rhythm
-// separate so they can all tell us different things.
-// ======================================================
-// Show what Koru most needs right now.
-document.querySelector("#currentNeed").textContent =
-  getCurrentNeedDisplay();
-// Show whether this is naturally an active or resting
-// period for Koru.
-document.querySelector("#naturalRhythm").textContent =
-  getNaturalRhythmDisplay();
 
-setInterval(() => {
+  // Update the new companion-state cards.
+  document.querySelector("#currentNeed").textContent = getCurrentNeedDisplay();
+  document.querySelector("#naturalRhythm").textContent = getNaturalRhythmDisplay();
+}
   const now = Date.now();
   const elapsedHours = Math.max(0, (now - state.lastSeen) / 3600000);
 
