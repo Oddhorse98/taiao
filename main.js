@@ -219,43 +219,37 @@ if (state.happiness < 20) {
   };
 }
 function render() {
-  // Grab the three care stats we need to redraw.
   const values = {
     hunger: state.hunger,
     happiness: state.happiness,
     energy: state.energy
   };
-
-  // Update each number + its matching progress bar.
   for (const [key, value] of Object.entries(values)) {
     document.querySelector(`#${key}Value`).textContent = Math.round(value);
     document.querySelector(`#${key}Bar`).style.width = `${value}%`;
   }
-
-  // Update Koru's name + mood emoji.
   document.querySelector("#name").textContent = state.name;
   document.querySelector("#mood").textContent = mood();
-
-  // Update the bilingual mood message.
   const message = moodMessage();
   document.querySelector("#moodReo").textContent = message.reo;
   document.querySelector("#moodEnglish").textContent = message.english;
-
-  // Update the new companion-state cards.
+  // Update need + rhythm whenever the UI redraws.
   document.querySelector("#currentNeed").textContent = getCurrentNeedDisplay();
   document.querySelector("#naturalRhythm").textContent = getNaturalRhythmDisplay();
 }
+
+// Update Koru's stats over time and save them every second.
+setInterval(() => {
   const now = Date.now();
   const elapsedHours = Math.max(0, (now - state.lastSeen) / 3600000);
-
   state.hunger = Math.max(0, state.hunger - elapsedHours * 4);
   state.happiness = Math.max(0, state.happiness - elapsedHours * 2);
   state.energy = Math.max(0, state.energy - elapsedHours * 1.5);
   state.lastSeen = now;
-
   localStorage.setItem(KEY, JSON.stringify(state));
   render();
 }, 1000);
+
 const discoveries = [
   ["He wā hou", "A new moment in TAIAO. Take a breath and look around."],
   ["Te ngahere", "The forest is alive with tiny discoveries."],
