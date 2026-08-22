@@ -202,7 +202,7 @@ function act(action) {
   }
 
   if (action === "explore") {
-    if (state.energy < 18) {
+    if (state.energy < kaitiaki.limits.exploreEnergy) {
       setSpeech("Me okioki tātou. 🌙");
     } else {
       state.energy = clamp(state.energy - 15);
