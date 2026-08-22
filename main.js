@@ -229,7 +229,47 @@ function act(action) {
     state.happiness = clamp(state.happiness + 2);
     setSpeech("Okioki… 🌙");
   }
+if (action === "explore") {
 
+  // First, check whether this is a natural active time
+  // for the current kaitiaki.
+  //
+  // Koru is currently configured with:
+  // activeTime: "day"
+  //
+  // isKaitiakiActive() compares that setting with
+  // the player's real-world time.
+  if (!isKaitiakiActive()) {
+
+    // If Koru is outside their natural active period,
+    // they choose not to explore.
+    //
+    // Prototype reo — to be reviewed before production.
+    setSpeech("Kua pō... me okioki tāua. 🌙");
+
+    // Stop the Explore action here.
+    // No energy is spent and no discovery happens.
+    return;
+  }
+
+  // If the timing is okay, check Koru's energy next.
+  //
+  // The minimum energy required to explore comes from
+  // the kaitiaki configuration instead of a hard-coded number.
+  if (state.energy < kaitiaki.limits.exploreEnergy) {
+
+    // Koru needs to rest before exploring.
+    setSpeech("Me okioki tātou. 🌙");
+
+    // Stop the Explore action here too.
+    return;
+  }
+
+  // If the code reaches this point:
+  // ✓ Koru is within their natural active period.
+  // ✓ Koru has enough energy.
+  //
+  // Your EXISTING successful Explore code continues below.
   if (action === "explore") {
     if (state.energy < kaitiaki.limits.exploreEnergy) {
       setSpeech("Me okioki tātou. 🌙");
