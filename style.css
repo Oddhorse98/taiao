@@ -216,7 +216,34 @@ h3 { margin-bottom: 8px; font-size: 1.2rem; }
 .actions b { font-size: .78rem; margin-top: 2px; }
 
 .discovery p:last-child { margin-bottom: 0; opacity: .78; line-height: 1.5; }
-
+/* Companion state: current need + natural rhythm */
+.companion-state{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin:18px 0 22px;
+}
+.status-block{
+  padding:14px 16px;
+  border:1px solid #d8d2c4;
+  border-radius:18px;
+  background:#faf8f2;
+}
+.status-label{
+  margin-bottom:4px;
+  font-size:.75rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  color:#6e7d76;
+}
+#currentNeed,#naturalRhythm{
+  font-size:1.05rem;
+  font-weight:700;
+  color:#173d2b;
+}
+@media (max-width:600px){
+  .companion-state{grid-template-columns:1fr;}
+}
 footer {
   padding: 18px 3px 5px;
   font-size: .72rem;
